@@ -10,7 +10,9 @@ package com.bonc.db_op.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,9 +34,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.bonc.db_op.dao.StudentRepository;
 import com.bonc.db_op.entity.Student;
 import com.bonc.db_op.service.StudentService;
+import com.bonc.db_op.util.ExcelUtil;
 import com.bonc.db_op.util.POIUtil;
 import com.bonc.db_op.util.StringToDate;
 
@@ -78,37 +82,37 @@ public class StuController
     public String read(){
         //在数据库中初始化用户
         
-        return "hello/index";
+        return "hello/readExcel";
     }
     
     /** 
-     * 读取excel文件中的用户信息，保存在数据库中 
+     * 读取excel文件中的信息
      * @param excelFile 
      */  
-    @RequestMapping("/readExcel")  
-    public void readExcel(@RequestParam(value = "excelFile") MultipartFile excelFile,HttpServletRequest req,HttpServletResponse resp){  
+    @RequestMapping(value={"/readExcelFile"}, method = RequestMethod.POST)  
+    @ResponseBody
+    public String readExcel(@RequestParam(value = "excelFile") MultipartFile excelFile,HttpServletRequest req,HttpServletResponse resp){  
 
-        System.out.println("success");
         Map<String, Object> param = new HashMap<String, Object>();  
-        List<Student> students = new ArrayList<Student>();  
-        try { 
-            List<String[]> studentList = POIUtil.readExcel(excelFile);  
-            for(int i = 0;i<studentList.size();i++){  
+//       List<Student> students = new ArrayList<Student>();  
+       List<String[]> studentList = null;
+       try { 
+            studentList = POIUtil.readExcel(excelFile); 
+       
+            /*for(int i = 0;i<studentList.size();i++){  
               String[] stus = studentList.get(i);  
               Student student = new Student();  
-             /* user.setUserName(users[0]);  
-              user.setPassword(users[1]);  
-              user.setAge(Integer.parseInt(users[2]));  
-              allUsers.add(user); */ 
               student.setId(Integer.parseInt(stus[0]));
               student.setName(stus[1]);
               student.setSex(stus[2]);
-         //     student.setBirth(StringToDate.strToDate("yyyy/MM/dd", stus[3]));
+              //String tempdate = stus[3]+"-1-1";
+              student.setBirth(StringToDate.strToDate("yyyy", stus[3]));
+              //System.out.println(student.getBirth());
               student.setDepartment(stus[4]);
               student.setAddress(stus[5]);
               
-              System.out.println(student.getId()+"---"+student.getName());
-             }  
+              students.add(student);
+             }  */
            } catch (IOException e) {  
           //  logger.info("读取excel文件失败", e);  
                e.printStackTrace();
@@ -117,9 +121,39 @@ public class StuController
        //  this.userService.insertUsers(param);  
         
         
-         
+          return JSON.toJSONString(studentList);
     }  
     
+    @RequestMapping(value = "/partExport")
+    @ResponseBody
+    public void partExport (HttpServletResponse response){
+
+     //   JSONArray ja = ptmpOrderService.selectStatExport();//获取业务数据集
+     //   Map<String,String> headMap = ptmpOrderService.getPartStatHeadMap();//获取属性-列头
+        
+        JSONArray ja = new JSONArray();
+        for(int i=0;i<100;i++){
+            Student s = new Student();
+            
+            s.setId(i);
+            s.setName("POI"+i);
+            s.setSex(i%2==0?"男":"女");
+            s.setBirth(new Date());
+            s.setDepartment("英语系");
+            s.setAddress("上海");
+         
+            ja.add(s);
+        }
+        Map<String,String> headMap = new LinkedHashMap<String,String>();
+        headMap.put("id","编号");
+        headMap.put("name","姓名");
+        headMap.put("sex","性别");
+        headMap.put("department","院系");
+        headMap.put("address","地址");
+        
+        String title = "导出excel文件测试";
+        ExcelUtil.downloadExcelFile(title,headMap,ja,response);
+    }
     
     
     

@@ -9,11 +9,19 @@
 <body>
 
 	<h3>读取xls文件内容</h3>
-	<form id="myform" method="post" action="./readExcel" enctype="multipart/form-data">
-		文件:<input type="file" id="excelFile" name = "excelFile"/>
+	<form id="myform" enctype="multipart/form-data">
+		<input type="file" id="excelFile" name = "excelFile"/>
 		
-		<input type="submit"  value="确认提交"/>
+		<input type="button" id="up" value="确认提交"/>
 	</form>
+	<br/>
+    <br/>
+	<div id="filedata"></div>
 	
+	<br/>
+	<br/>
+	<form action="/partExport">
+        <input type="submit" id="u" value="下载excel文件"/>
+    </form>
 </body>
 </html>

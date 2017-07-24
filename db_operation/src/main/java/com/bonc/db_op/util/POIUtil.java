@@ -84,6 +84,7 @@ public class POIUtil {
         }  
         //获得文件名  
         String fileName = file.getOriginalFilename();  
+        
         //判断文件是否是excel文件  
         if(!fileName.endsWith(xls) && !fileName.endsWith(xlsx)){  
             logger.error(fileName + "不是excel文件");  

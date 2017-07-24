@@ -72,7 +72,7 @@ public class ExcelUtil{
         // 声明一个工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
         workbook.createInformationProperties();
-        workbook.getDocumentSummaryInformation().setCompany("*****公司");
+        workbook.getDocumentSummaryInformation().setCompany("bonc");
         SummaryInformation si = workbook.getSummaryInformation();
         si.setAuthor("JACK");  //填加xls文件作者信息
         si.setApplicationName("导出程序"); //填加xls文件创建程序信息
@@ -85,7 +85,7 @@ public class ExcelUtil{
         HSSFCellStyle titleStyle = workbook.createCellStyle();
         titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         HSSFFont titleFont = workbook.createFont();
-        titleFont.setFontHeightInPoints((short) 20);
+        titleFont.setFontHeightInPoints((short) 20); //设置字体大小
         titleFont.setBoldweight((short) 700);
         titleStyle.setFont(titleFont);
         // 列头样式
@@ -97,7 +97,7 @@ public class ExcelUtil{
         headerStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
         headerStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         HSSFFont headerFont = workbook.createFont();
-        headerFont.setFontHeightInPoints((short) 12);
+        headerFont.setFontHeightInPoints((short) 18); //12 看看列头大小变化
         headerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         headerStyle.setFont(headerFont);
         // 单元格样式
@@ -151,7 +151,8 @@ public class ExcelUtil{
                 HSSFRow titleRow = sheet.createRow(0);//表头 rowIndex=0
                 titleRow.createCell(0).setCellValue(title);
                 titleRow.getCell(0).setCellStyle(titleStyle);
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, headMap.size() - 1));
+                //合并单元格（int firstRow, int lastRow, int firstCol, int lastCol）
+                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, headMap.size() - 1));  
 
                 HSSFRow headerRow = sheet.createRow(1); //列头 rowIndex =1
                 for(int i=0;i<headers.length;i++)
@@ -208,7 +209,7 @@ public class ExcelUtil{
         CellStyle titleStyle = workbook.createCellStyle();
         titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         Font titleFont = workbook.createFont();
-        titleFont.setFontHeightInPoints((short) 20);
+        titleFont.setFontHeightInPoints((short) 20);   //表头字体大小
         titleFont.setBoldweight((short) 700);
         titleStyle.setFont(titleFont);
         // 列头样式
@@ -220,7 +221,7 @@ public class ExcelUtil{
         headerStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
         headerStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         Font headerFont = workbook.createFont();
-        headerFont.setFontHeightInPoints((short) 12);
+        headerFont.setFontHeightInPoints((short) 18);
         headerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         headerStyle.setFont(headerFont);
         // 单元格样式
@@ -265,6 +266,7 @@ public class ExcelUtil{
                 SXSSFRow titleRow = sheet.createRow(0);//表头 rowIndex=0
                 titleRow.createCell(0).setCellValue(title);
                 titleRow.getCell(0).setCellStyle(titleStyle);
+               //合并单元格（int firstRow, int lastRow, int firstCol, int lastCol）
                 sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, headMap.size() - 1));
 
                 SXSSFRow headerRow = sheet.createRow(1); //列头 rowIndex =1
@@ -318,7 +320,7 @@ public class ExcelUtil{
             response.reset();
 
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"); 
-            response.setHeader("Content-Disposition", "attachment;filename="+ new String((title + ".xlsx").getBytes(), "utf-8"));
+            response.setHeader("Content-Disposition", "attachment;filename="+ new String((title + ".xlsx").getBytes(), "iso8859-1"));
             response.setContentLength(content.length);
             ServletOutputStream outputStream = response.getOutputStream();
             BufferedInputStream bis = new BufferedInputStream(is);
@@ -345,7 +347,7 @@ public class ExcelUtil{
             
             s.setId(i);
             s.setName("POI"+i);
-            s.setSex(i/2==0?"男":"女");
+            s.setSex(i%2==0?"男":"女");
             s.setBirth(new Date());
             s.setDepartment("英语系");
             s.setAddress("上海");
@@ -368,7 +370,7 @@ public class ExcelUtil{
         System.out.println("共"+count+"条数据,执行"+(new Date().getTime()-d.getTime())+"ms");
         outXls.close();*/
         //
-        OutputStream outXlsx = new FileOutputStream("D://Program Files//eclipse//work_cur//db_operation//a.xlsx");
+        OutputStream outXlsx = new FileOutputStream("E://Git_repository//db_operation//db_operation//a.xlsx");
         System.out.println("正在导出xlsx....");
         Date d2 = new Date();
         ExcelUtil.exportExcelX(title,headMap,ja,null,0,outXlsx);
