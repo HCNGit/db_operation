@@ -23,4 +23,6 @@ dist/
 nbdist/
 .nb-gradle/
 
-/target/
+db_operation/*.xlsx
+db_operation/*.cmd
+db_operation/mvnw

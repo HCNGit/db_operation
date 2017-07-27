@@ -1,8 +1,9 @@
 
 var totalpage;
-var currentpage = 0;
+var currentpage = 1;
 $(document).ready(function() {
-    $("#query").click(init);
+    $("#query").click(show);
+    $("#queryByAddress").click(queryByAddr);
     
     $("#prev").click(function(){
     
@@ -14,6 +15,7 @@ $(document).ready(function() {
         currentpage--;
         $("#currentpage").val(""+currentpage);
         show();
+       // queryByAddr();
     });
     
     $("#next").click(function(){
@@ -26,6 +28,7 @@ $(document).ready(function() {
         currentpage++;
         $("#currentpage").val(""+currentpage);
         show();
+       // queryByAddr();
 
     });
     
@@ -34,59 +37,11 @@ $(document).ready(function() {
     	currentpage=totalpage;
         $("#currentpage").val(""+totalpage);
         show();
+       // queryByAddr();
     });
     
 });
 
-function init(){
-	
-	 var info = {
-		       "page" : currentpage
-		   };
-		   $.ajax({
-		       type : "GET",
-		       url : "./findStudentByPage",
-		       data : info,
-		       dataType:"json",
-		       contentType: "application/x-www-form-urlencoded; charset=utf-8",
-		       success : function(data) {
-		    	   var studentInfo = data;
-		            var studentList = studentInfo.content;
-		            
-		            console.log(studentInfo);
-//		            console.log(studentInfo.totalElements);
-//		            console.log(studentInfo.totalPages);
-		            currentpage++;
-		            totalpage = studentInfo.totalPages;
-		            $('#totalpage').html(""+totalpage);
-		            $('#currentpage').val(""+currentpage);
-		          //  $("#student").html("");
-		            $('#student').append("<caption><h4>"+"学生信息"+"</h4></caption>");
-		            $('#student').append("<tr>"+
-		                    "<th>"+"学号"+"</th>" +
-		                    "<th>"+"姓名"+"</th>" +
-		                    "<th>"+"性别"+"</th>" +
-		                    "<th>"+"出生日期"+"</th>" +
-		                    "<th>"+"院系"+"</th>" +
-		                    "<th>"+"家庭地址"+"</th>" +
-		                            "</tr>");
-		            var length = studentList.length;
-		            for(var i=0;i<length;i++)
-		                {
-		                  $('#student').append("<tr>"+
-		                        "<td>"+studentList[i].id+"</td>" +
-		                        "<td>"+studentList[i].name+"</td>" +
-		                        "<td>"+studentList[i].sex+"</td>" +
-		                        "<td>"+studentList[i].birth+"</td>" +
-		                        "<td>"+studentList[i].department+"</td>" +
-		                        "<td>"+studentList[i].address+"</td>" +
-		                                "</tr>");
-		                }
-
-		       }
-		   }); 
-
-   }
 function show(){
     var info = {
        "page" : --currentpage
@@ -99,13 +54,16 @@ function show(){
 	       contentType: "application/x-www-form-urlencoded; charset=utf-8",
 	       success : function(data) {
 	    	   var studentInfo = data;
+	    	    console.log(data);
 	            var studentList = studentInfo.content;
 	            
-	            console.log(studentInfo);
+	       //     console.log(studentInfo);
 
 	            currentpage++;
+	        //    currentpage++;
 	            totalpage = studentInfo.totalPages;
 	            $('#totalpage').html(""+totalpage);
+	            $('#currentpage').val(""+currentpage);
 	            $("#student").html("");
 	            $('#student').append("<caption><h4>"+"学生信息"+"</h4></caption>");
 	            $('#student').append("<tr>"+
@@ -132,3 +90,54 @@ function show(){
 	       }
 	   }); 
 }
+
+function queryByAddr(){
+	//currentpage = 1;
+	 var info = {
+		       "page" : --currentpage,
+		       "address" : $("#address").val()
+		   };
+		   $.ajax({
+		       type : "GET",
+		       url : "./findStudentByAddress",
+		       data : info,
+		       dataType:"json",
+		       contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		       success : function(data) {
+		    	   	var studentInfo = data;
+		            var studentList = studentInfo.content;
+		            
+		            console.log(studentInfo);
+
+		            currentpage++;
+		            totalpage = studentInfo.totalPages;
+		            $('#totalpage').html(""+totalpage);
+		            $('#currentpage').val(""+currentpage);
+		            $("#student").html("");
+		            $('#student').append("<caption><h4>"+"学生信息"+"</h4></caption>");
+		            $('#student').append("<tr>"+
+		                    "<th>"+"学号"+"</th>" +
+		                    "<th>"+"姓名"+"</th>" +
+		                    "<th>"+"性别"+"</th>" +
+		                    "<th>"+"出生日期"+"</th>" +
+		                    "<th>"+"院系"+"</th>" +
+		                    "<th>"+"家庭地址"+"</th>" +
+		                            "</tr>");
+		            var length = studentList.length;
+		            for(var i=0;i<length;i++)
+		                {
+		                  $('#student').append("<tr>"+
+		                        "<td>"+studentList[i].id+"</td>" +
+		                        "<td>"+studentList[i].name+"</td>" +
+		                        "<td>"+studentList[i].sex+"</td>" +
+		                        "<td>"+studentList[i].birth+"</td>" +
+		                        "<td>"+studentList[i].department+"</td>" +
+		                        "<td>"+studentList[i].address+"</td>" +
+		                                "</tr>");
+		                }
+
+		       }
+		   }); 
+
+   }
+

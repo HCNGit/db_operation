@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
 <title>查询结果分页</title>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-<script src="/js/page.js"></script>
+<script src="./js/page.js"></script>
 <script>
 
 
@@ -16,11 +16,11 @@
 <button id="query">查询所有学生</button>
 </p>
 
-<table id="student">
+<table id="student" border="1">
 
 </table>
 
-
+<br/><br/>
 <div class="page_normal">
     <input type="button" id="prev" value="上一页"/>
     <span>第</span><input type ="text" id="currentpage"  /><span>页</span>
@@ -28,5 +28,8 @@
     <input type="button" id="next" value="下一页"/>
     <input type="button" id="tail" value="尾页"/>
 </div>
+<br/><br/>
+<button id="queryByAddress">按地址查询学生</button><span style="color: red;font-size:5px">需要在后台page.js中改代码</span>
+<input type="text" id="address"/>
 </body>
 </html>

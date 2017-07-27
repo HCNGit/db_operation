@@ -50,6 +50,34 @@ public class StuController
     private StudentRepository repository;
     
     
+    @RequestMapping(value={"/dataTablesDemo", "/inter"})
+    public String inter(){
+        //在数据库中初始化用户
+        
+        return "hello/dataTablesDemo";
+    }
+    
+    @RequestMapping(value={"/queryByPage", "/inter"})
+    public String queryByPage(){
+        //在数据库中初始化用户
+        
+        return "hello/page";
+    }
+    
+    
+    @RequestMapping(value={"/readFile", "/read"})
+    public String read(){
+        //在数据库中初始化用户
+        
+        return "hello/readExcel";
+    }
+    
+    
+    
+    
+    
+    
+    //查询所有学生，其结果用jpa分页
     @RequestMapping(value={"/findStudentByPage"}, method = RequestMethod.GET)
     @ResponseBody
     public Page<Student> findStudent(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -59,31 +87,65 @@ public class StuController
         Page<Student> pageRes =  repository.findAll(pageable);
         return pageRes;
     }
-    /*@RequestMapping(value={"/findStudentByPage"}, method = RequestMethod.GET)
+    //按地址查询，其结果分页
+    @RequestMapping(value={"/findStudentByAddress"}, method = RequestMethod.GET)
     @ResponseBody
-    public JSON findStudent(){
-        Sort sort = new Sort(Sort.Direction.ASC,"id");  
-        Pageable pageable = new PageRequest(0,3,sort);
-        Page<Student> page =  repository.findAll(pageable);
-        return (JSON)JSON.toJSON(page);
-    }*/
+    public Page<Student> findStudentByAddr(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                           @RequestParam(value = "address") String address,
+                                     @RequestParam(value = "size", defaultValue = "2") Integer size){
+        Sort sort = new Sort(Sort.Direction.ASC,"name");  
+        Pageable pageable = new PageRequest(page,size,sort);
+        Page<Student> pageRes =  repository.findStudentByAddress(pageable,address);
+        return pageRes;
+    }
     
-    
-    @RequestMapping(value={"/", "/inter"})
-    public String inter(){
-        //在数据库中初始化用户
+    //DataTables 前端分页
+    @RequestMapping(value={"/findAlls"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSON findAlls(){
+        List<Student> list =null;
         
-        return "hello/page";
+        list = repository.findAll();
+        return (JSON)JSON.toJSON(list);
+    }
+    /**
+     * 
+     * Description: <br>
+     * 1、…<br>
+     * 2、…<br>
+     * Implement: <br>
+     * 1、…<br>
+     * 2、…<br>
+     * 
+     * @param page   每页的起始坐标
+     * @param draw
+     * @param size
+     * @return 
+     * @see
+     */
+    //dataTables 后端分页
+    @RequestMapping(value={"/dataTableBack"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSON find(@RequestParam(value = "start") Integer page,
+                     @RequestParam(value = "draw") Integer draw,
+                                     @RequestParam(value = "length") Integer size){
+       // Sort sort = new Sort(Sort.Direction.ASC,"id");  
+        Pageable pageable = new PageRequest(page/size,size);
+        Page<Student> pageRes =  repository.findAll(pageable);
+        
+       int draw1 = draw.intValue();
+        Map<String, Object> resMap = new HashMap<>();
+        resMap.put("draw", draw1);
+        resMap.put("recordsTotal", pageRes.getTotalElements());
+        resMap.put("recordsFiltered",pageRes.getTotalElements() );
+        resMap.put("data", pageRes.getContent());
+        
+        return (JSON)JSON.toJSON(resMap);
+   
     }
     
     
-    
-    @RequestMapping(value={"/readFile", "/read"})
-    public String read(){
-        //在数据库中初始化用户
-        
-        return "hello/readExcel";
-    }
+   
     
     /** 
      * 读取excel文件中的信息
@@ -114,11 +176,8 @@ public class StuController
               students.add(student);
              }  */
            } catch (IOException e) {  
-          //  logger.info("读取excel文件失败", e);  
                e.printStackTrace();
            }  
-       //  param.put("student", students);  
-       //  this.userService.insertUsers(param);  
         
         
           return JSON.toJSONString(studentList);
@@ -127,9 +186,6 @@ public class StuController
     @RequestMapping(value = "/partExport")
     @ResponseBody
     public void partExport (HttpServletResponse response){
-
-     //   JSONArray ja = ptmpOrderService.selectStatExport();//获取业务数据集
-     //   Map<String,String> headMap = ptmpOrderService.getPartStatHeadMap();//获取属性-列头
         
         JSONArray ja = new JSONArray();
         for(int i=0;i<100;i++){
