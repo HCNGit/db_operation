@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -25,80 +25,83 @@
 	</properties>
 
 	<dependencies>
-	
-	   <!-- 前端模板 ,spring推荐使用-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency> 
-    
-    <!-- json工具类 -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>1.2.7</version>
-    </dependency>
-    
-    <!-- spring jpa -->
-    <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-data-jpa</artifactId>
-     </dependency>
-    
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-     </dependency>
-   
-   
-   <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->  
-    <dependency>  
-    <groupId>org.apache.poi</groupId>  
-    <artifactId>poi</artifactId>  
-    <version>3.14</version>  
-    </dependency>  
-    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->  
-    <dependency>  
-    <groupId>org.apache.poi</groupId>  
-    <artifactId>poi-ooxml</artifactId>  
-    <version>3.14</version>  
-    </dependency>
-   
-    <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-    </dependency>
-    
+
+		<!-- 前端模板 ,spring推荐使用 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- json工具类 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.7</version>
+		</dependency>
+
+		<!-- spring jpa -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.14</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<!-- 移除嵌入式tomcat插件 
-         <exclusions>
-            <exclusion>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-         </exclusion>
-        </exclusions>-->
 		</dependency>
 
-		  <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
-         <!-- <dependency>
+        <!-- 测试模块，包括JUnit、Hamcrest、Mockito -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			 <scope>test</scope>
-		</dependency> -->
-	
-	   <dependency>
-         <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
-           <scope>provided</scope>
-        </dependency>
-    
+			<scope>test</scope>
+			<!--  
+			test，只在测试时使用，用于编译和运行测试代码。不会随项目发布。
+			compile，缺省值，适用于所有阶段，会随着项目一起发布。
+			provided，类似compile，期望JDK、容器或使用者会提供这个依赖。打成war时不会被打包。
+			  -->
+		</dependency>
+		<!-- <dependency>
+		          <groupId>junit</groupId> 
+		          <artifactId>junit</artifactId> 
+			      <version>4.11</version>
+			 </dependency> -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -107,7 +110,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 

@@ -9,7 +9,6 @@
 package com.bonc.db_op.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,7 +18,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,17 +28,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.bonc.db_op.dao.StudentRepository;
 import com.bonc.db_op.entity.Student;
-import com.bonc.db_op.service.StudentService;
 import com.bonc.db_op.util.ExcelUtil;
 import com.bonc.db_op.util.POIUtil;
-import com.bonc.db_op.util.StringToDate;
 
 @Controller
 public class StuController
@@ -49,7 +44,7 @@ public class StuController
     @Autowired
     private StudentRepository repository;
     
-    
+    //value映射多个值多个请求指向此方法
     @RequestMapping(value={"/dataTablesDemo", "/inter"})
     public String inter(){
         //在数据库中初始化用户
@@ -57,7 +52,7 @@ public class StuController
         return "hello/dataTablesDemo";
     }
     
-    @RequestMapping(value={"/queryByPage", "/inter"})
+    @RequestMapping(value={"/queryByPage"})
     public String queryByPage(){
         //在数据库中初始化用户
         
@@ -133,7 +128,7 @@ public class StuController
         Pageable pageable = new PageRequest(page/size,size);
         Page<Student> pageRes =  repository.findAll(pageable);
         
-       int draw1 = draw.intValue();
+        int draw1 = draw.intValue();
         Map<String, Object> resMap = new HashMap<>();
         resMap.put("draw", draw1);
         resMap.put("recordsTotal", pageRes.getTotalElements());
@@ -159,7 +154,7 @@ public class StuController
 //       List<Student> students = new ArrayList<Student>();  
        List<String[]> studentList = null;
        try { 
-            studentList = POIUtil.readExcel(excelFile); 
+             studentList = POIUtil.readExcel(excelFile); 
        
             /*for(int i = 0;i<studentList.size();i++){  
               String[] stus = studentList.get(i);  

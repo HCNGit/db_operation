@@ -5,8 +5,7 @@ $(document).ready(function() {
 });
 
 function upload(){
-	
-	
+
 	/*
 	 * 第二种方式传文件数据，此法可传多个文件
 	 * var formData = new FormData();

@@ -22,8 +22,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;  
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;  
 import org.springframework.web.multipart.MultipartFile;  
-/** 
- * excel读写工具类 */  
+/**
+ * 
+ * 读取excel文件内容的工具类
+ * 〈功能详细描述〉
+ * @author HCN
+ * @version 2017年8月2日
+ * @see POIUtil
+ * @since
+ */
 public class POIUtil {  
     private static Logger logger  = Logger.getLogger(POIUtil.class);  
     private final static String xls = "xls";  

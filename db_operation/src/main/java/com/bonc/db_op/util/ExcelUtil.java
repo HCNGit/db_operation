@@ -53,7 +53,15 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bonc.db_op.entity.Student;
-
+/**
+ * 
+ * excel文件的导出工具类，.xls 和 .xlsx格式
+ * 〈功能详细描述〉
+ * @author HCN
+ * @version 2017年8月2日
+ * @see ExcelUtil
+ * @since
+ */
 public class ExcelUtil{
     public static String NO_DEFINE = "no_define";//未定义的字段
     public static String DEFAULT_DATE_PATTERN="yyyy年MM月dd日";//默认日期格式

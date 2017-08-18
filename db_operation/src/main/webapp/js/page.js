@@ -4,6 +4,7 @@ var currentpage = 1;
 $(document).ready(function() {
     $("#query").click(show);
     $("#queryByAddress").click(queryByAddr);
+    $("#score").click(score);
     
     $("#prev").click(function(){
     
@@ -135,9 +136,27 @@ function queryByAddr(){
 		                        "<td>"+studentList[i].address+"</td>" +
 		                                "</tr>");
 		                }
-
 		       }
 		   }); 
 
    }
 
+function score(){
+    var info = {
+       "id" : 99,
+       "stu_id" : 902,
+       "c_name" : "英语"
+       
+   };
+    $.ajax({
+	       type : "GET",
+	       url : "./saveScore",
+	       data : info,
+	       dataType:"json",
+	       contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	       success : function(data) {
+	    	   
+	    	  console.log(data);
+	       }
+	       });
+}
