@@ -54,7 +54,7 @@ function show(){
 	       dataType:"json",
 	       contentType: "application/x-www-form-urlencoded; charset=utf-8",
 	       success : function(data) {
-	    	   var studentInfo = data;
+	    	    var studentInfo = data;
 	    	    console.log(data);
 	            var studentList = studentInfo.content;
 	            

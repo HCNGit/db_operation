@@ -46,8 +46,8 @@ public interface StudentDao extends JpaRepository<Student,Integer>
     @Query(value="SELECT * FROM student LIMIT 1,3",nativeQuery=true)
     List<Student> findStuBetween();
     
-    //从student表查询所有学生的学号（id）、姓名（name）和院系（department）的
-    @Query(value="select id,name,department from Student")
+    //从student表查询所有学生的学号（id）、姓名（name）和院系（department）的   !!!封装不成Student对象的
+    @Query(value="select name,department from Student")
     List<Student> findIND();
     
     //从student表中查询计算机系和英语系的学生的信息
@@ -97,6 +97,11 @@ public interface StudentDao extends JpaRepository<Student,Integer>
         + " and student.id=score.stu_id",nativeQuery= true)
     List queryStu1();
     
+    //测试sql语句，测试结果：正确
+    @Query(value="SELECT student.id, name,sex,birth,department, address, c_name,grade "
+        + "FROM student, score where student.department = score.c_name"
+        + " or student.address=score.c_name",nativeQuery= true)
+    List test();
     
     
     

@@ -42,7 +42,7 @@ public class StudentController
     
     
     
-    @RequestMapping(value={"/insertStudent"}, method = RequestMethod.GET)
+    @RequestMapping(value="/insertStudent", method = RequestMethod.GET)
     @ResponseBody
     public String insertStudent(){
         Student student = new Student();
@@ -88,7 +88,10 @@ public class StudentController
     @ResponseBody
     public JSON findIND(){
         List<Student> list =null;
-        
+        for(Student stu:list){
+            System.out.println(stu.getName());
+            //System.out.println(stu.getId());
+        }
         list = studentDao.findIND();
         return (JSON)JSON.toJSON(list);
     }
@@ -148,6 +151,7 @@ public class StudentController
         List list =null;
         
         list = studentDao.findAllInfo();
+       // System.out.println(list[0].toString());
         return (JSON)JSON.toJSON(list);
     }
     
@@ -184,6 +188,15 @@ public class StudentController
         List list =null;
         
         list = studentDao.queryStu1();
+        return (JSON)JSON.toJSON(list);
+    }
+    
+    @RequestMapping(value={"/test"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSON test(){
+        List list =null;
+        
+        list = studentDao.test();
         return (JSON)JSON.toJSON(list);
     }
 }
