@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DbOperationApplication {
 
+    //程序入口，springboot
 	public static void main(String[] args) {
 		SpringApplication.run(DbOperationApplication.class, args);
 		
